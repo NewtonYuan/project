@@ -41,12 +41,12 @@ keys in `VITE_` variables. The RSVP deadline has not yet been set.
 
 The single-page site in `src/App.tsx` has sections for the invitation, day
 schedule, venue, directions and travel, accommodations, dress code, FAQs,
-registry guidance, and RSVP. Rectangles mark where photographs will go, except
-for the venue section, which uses `public/images/markovina-venue.png`.
+registry guidance, and RSVP. The hero uses `public/images/couple-hero.jpg`; the venue section uses
+`public/images/markovina-venue.png`.
 Motion reveals sections as they enter the viewport.
 
 The countdown below the invitation uses four scorecard-style flip cards. Its
-target is 22 March 2027 at 2:30 pm New Zealand daylight time (`NZDT`, UTC+13).
+target is guest arrival on 22 March 2027 at 2:30 pm New Zealand daylight time (`NZDT`, UTC+13).
 Change the target in `src/Countdown.tsx` if the event time changes. The timer
 uses the visitor's clock but counts toward the same absolute instant in every
 time zone, and the flip animation respects reduced-motion preferences.
@@ -56,8 +56,8 @@ visitor's reduced-motion preference.
 
 Fonts are bundled locally through Fontsource:
 
-- `font-title`: Cormorant Infant (400 and 600) for headings.
-- `font-sans font-light`: Lato Light (300) for readable information, navigation,
+- `font-title`: Cormorant Infant (500 and 700) for headings.
+- `font-sans font-normal`: Lato Regular (400) for readable information, navigation,
   and smaller headings; the body default.
 
 ## Colour palette
@@ -77,19 +77,29 @@ black for text; the other extracted colours remain available in the theme.
 | Sage | `#B9C5AE` |
 | Blue | `#166198` |
 
-## Content to finish before sharing
+## Wedding information
 
-Annie Zheng and Newton Yuan's names are now set. Markovina Vineyard Estate
-has since been confirmed as the venue. Its address is from the venue's official
-contact page, and the venue section includes an interactive Google Maps embed
-plus the couple's shared map link. The countdown date and time were provided
-separately. The site uses explicit placeholder labels for everything else.
-Replace the remaining draft copy in `src/App.tsx` with confirmed details:
+Guest copy comes from the supplied Wedding Website Planning.pdf. The site now
+includes About Us, Our Team, the seven-event schedule, dress-code inspiration,
+venue and map, transport and parking, Food & Beverage, updated FAQs, and RSVP.
+The hero uses the supplied couple portrait. All sections have a full-viewport
+minimum height; expanding stories, FAQs, or the RSVP form can increase it.
+The footer is part of the RSVP section.
 
-- Arrival, ceremony, and reception times; dress code.
-- Parking, transport, and accommodation advice.
-- Guest policies, wedding-day contact, and any gift registry.
+Edit `src/weddingContent.ts` for the schedule, wedding party, navigation, and
+FAQs. Edit `src/InformationSections.tsx` for the couple profiles, stories,
+dress code, and food copy. The dress-code illustration is extracted from the
+planning PDF and stored at `public/images/dress-code.jpg`.
+
+Still to finish:
+
+- Annie and Newton's individual love stories (up to 100 words each).
+- Newton's MBTI, if it should be shown.
+- Final food and beverage details.
 - RSVP deadline and a Formspree endpoint for collecting responses.
-- Real photos in place of the remaining image rectangles.
+- Digital gift contribution details closer to the day.
 
-The guest-information sections follow guidance from [The Knot](https://www.theknot.com/content/free-wedding-website-faq), [Joy](https://withjoy.com/blog/what-to-include-on-your-wedding-website/), and [Zola](https://www.zola.com/expert-advice/how-to-write-your-wedding-website).
+The countdown remains set to guest arrival at 2:30 pm NZDT; the ceremony begins
+at 3:00 pm. The original venue details, envelope opening, and upward website
+fade are preserved. Accommodation advice and the former personal-note section
+have been removed.

@@ -1,0 +1,94 @@
+.day-timeline {
+  --timeline-axis: 210px;
+  position: relative;
+  margin: 56px 0 0;
+}
+
+.day-timeline-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day-timeline::before {
+  content: '';
+  position: absolute;
+  left: var(--timeline-axis);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--palette-blush);
+}
+
+.day-timeline-item {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 64px;
+  align-items: baseline;
+  min-height: 112px;
+  padding-bottom: 36px;
+}
+
+.day-timeline-time {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  transform-origin: left center;
+  transition: transform 0.22s ease;
+}
+
+.day-timeline-event h3 {
+  margin: 0;
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transform-origin: left center;
+  transition: transform 0.22s ease;
+}
+
+.day-timeline-item.is-active .day-timeline-time { transform: translateX(2px) scale(1.06); }
+.day-timeline-item.is-active h3 { transform: scale(1.04); }
+
+.day-timeline-marker {
+  position: absolute;
+  left: calc(var(--timeline-axis) + 1px);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--site-text);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.day-timeline-marker::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--palette-sand);
+  border-radius: inherit;
+  animation: day-marker-pulse 1.9s ease-out infinite;
+}
+
+@keyframes day-marker-pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(2.7); opacity: 0; }
+}
+
+@media (max-width: 767px) {
+  .day-timeline { --timeline-axis: 7px; margin-top: 36px; }
+  .day-timeline-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding-left: 40px;
+    padding-bottom: 32px;
+    min-height: 132px;
+  }
+  #the-day .day-timeline-event h3 { font-size: clamp(2rem, 6.8vw, 2.75rem); }
+  #the-day .day-timeline-time { font-size: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day-timeline-marker { display: none; }
+  .day-timeline-time, .day-timeline-event h3 { transition: none; transform: none !important; }
+}

@@ -6,26 +6,31 @@
 }
 
 .countdown-content {
-  width: min(100%, 1040px);
+  --countdown-gap: clamp(2.25rem, 5vw, 3.5rem);
+  width: 100%;
+  max-width: 680px;
   margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .countdown-content { max-width: 820px; }
 }
 
 .countdown-title {
   margin: 0;
   font-family: var(--font-title);
-  font-size: clamp(3.6rem, 8vw, 6.5rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
+  font-size: clamp(4.8rem, 9vw, 9rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.07em;
 }
 
 .countdown-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(0.4rem, 2vw, 1.5rem);
+  gap: clamp(0.4rem, 1.5vw, 1rem);
   width: 100%;
-  margin: clamp(2.25rem, 5vw, 3.5rem) auto 0;
+  margin: var(--countdown-gap) auto 0;
 }
 
 .flip-unit {
@@ -34,30 +39,38 @@
 
 .flip-card {
   overflow: hidden;
-  border: 1px solid rgb(0 0 0 / 40%);
-  border-radius: clamp(0.5rem, 1.5vw, 1rem);
+  border: 0;
+  border-radius: clamp(1rem, 2vw, 1.5rem);
   background: var(--palette-cream);
+}
+
+.flip-card-frame {
+  position: relative;
 }
 
 .flip-display {
   position: relative;
-  aspect-ratio: 1.12;
+  aspect-ratio: 0.95;
   overflow: hidden;
   perspective: 900px;
   container-type: inline-size;
 }
 
+.flip-display::before,
 .flip-display::after {
   position: absolute;
   z-index: 5;
   top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: rgb(0 0 0 / 30%);
+  width: clamp(12px, 1.8vw, 18px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--palette-blush);
   content: '';
   pointer-events: none;
 }
+
+.flip-display::before { left: 0; transform: translate(-50%, -50%); }
+.flip-display::after { right: 0; transform: translate(50%, -50%); }
 
 .flip-half {
   position: absolute;
@@ -134,28 +147,50 @@
 
 .flip-label {
   display: block;
-  margin-top: 1.1rem;
+  position: relative;
+  margin: calc(-1 * clamp(8px, 1.5vw, 14px)) 0 0;
+  padding: 0 4px 18px;
   font-family: var(--font-sans);
   font-size: clamp(0.875rem, 1.5vw, 1.25rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.2;
   text-align: center;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .countdown-date {
-  margin: 2rem 0 0;
+  margin: var(--countdown-gap) 0 0;
   font-size: 1.125rem;
 }
 
+.countdown-details {
+  display: grid;
+  gap: 12px;
+  width: fit-content;
+  margin: var(--countdown-gap) auto 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.125rem;
+}
+
+.countdown-details li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.countdown-details svg { display: block; width: 24px; height: 24px; }
+
 @media (max-width: 640px) {
+  .countdown-content { --countdown-gap: 2rem; }
   .countdown-grid {
     gap: clamp(0.35rem, 1.5vw, 0.75rem);
-    margin-top: 2rem;
   }
 
-  .countdown-title { font-size: clamp(2.4rem, 10vw, 4rem); }
-  .flip-label { margin-top: 0.65rem; }
+  .countdown-title { font-size: clamp(3.8rem, 10vw, 6rem); }
+  .flip-label { padding-bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

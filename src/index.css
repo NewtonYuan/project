@@ -18,11 +18,52 @@ body {
   background: var(--palette-cream);
   color: var(--site-text);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
+}
+
+@layer base {
+  .font-title { font-weight: 500; }
 }
 
 html {
-  scroll-padding-top: 1rem;
+  --navbar-height: 80px;
+  scroll-padding-top: var(--navbar-height);
+}
+
+@media (min-width: 640px) {
+  html { --navbar-height: 88px; }
+}
+
+/* Match the portfolio's 18px track and 14px thumb using wedding colours. */
+::-webkit-scrollbar {
+  width: 18px;
+  height: 18px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--palette-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid var(--palette-cream);
+  border-radius: 999px;
+  background: var(--palette-blush);
+  min-height: 56px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--palette-blush) 75%, var(--palette-sand));
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--palette-cream);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: var(--palette-blush) var(--palette-cream);
+  }
 }
 
 ::selection {
@@ -30,6 +71,465 @@ html {
   color: var(--site-text);
 }
 
+.rsvp-button {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  min-width: 13ch;
+  max-width: 100%;
+  padding: 16px 28px;
+  border: 1.5px solid var(--site-text);
+  border-radius: 0;
+  background: var(--palette-cream);
+  color: var(--site-text);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.24s ease;
+}
+
+.rsvp-button::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  background: var(--site-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rsvp-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.rsvp-button:not(:disabled):hover::before,
+.rsvp-button:focus-visible::before,
+.rsvp-button.is-active::before {
+  transform: scaleX(1);
+}
+
+.rsvp-button:not(:disabled):hover,
+.rsvp-button:focus-visible,
+.rsvp-button.is-active {
+  color: var(--palette-cream);
+}
+
+.rsvp-button:focus-visible {
+  outline: 2px solid var(--site-text);
+  outline-offset: 4px;
+}
+
+.rsvp-button:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-button, .rsvp-button::before { transition: none; }
+}
+
 .photo-placeholder {
   background-image: linear-gradient(145deg, rgb(255 255 255 / 16%), transparent 60%, rgb(0 0 0 / 5%));
+}
+
+.mobile-menu-toggle {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--site-text);
+  cursor: pointer;
+  transition: transform 0.22s ease;
+}
+
+.mobile-menu-toggle:hover { transform: translateY(-1px); }
+.mobile-menu-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+.mobile-menu-toggle span {
+  position: absolute;
+  left: 50%;
+  width: 34px;
+  height: 3px;
+  background: currentColor;
+  transform: translateX(-50%);
+  transition: top 0.22s ease, transform 0.22s ease, opacity 0.18s ease;
+}
+
+.mobile-menu-toggle span:nth-child(1) { top: 12px; }
+.mobile-menu-toggle span:nth-child(2) { top: 22px; }
+.mobile-menu-toggle span:nth-child(3) { top: 32px; }
+.mobile-menu-toggle.is-open span:nth-child(1) { top: 22px; transform: translateX(-50%) rotate(45deg); }
+.mobile-menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.is-open span:nth-child(3) { top: 22px; transform: translateX(-50%) rotate(-45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-toggle, .mobile-menu-toggle span { transition: none; }
+}
+
+/* Each part of the invitation fills a viewport; expanded content can grow. */
+#main > section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: clamp(48px, 7svh, 80px);
+  padding-bottom: clamp(48px, 7svh, 80px);
+  scroll-margin-top: 0;
+}
+
+#main > section > div {
+  width: 100%;
+}
+
+#main {
+  position: relative;
+  isolation: isolate;
+}
+
+#main > section {
+  position: relative;
+  z-index: 2;
+  background-color: var(--palette-cream);
+}
+
+#main > section.bg-blush {
+  background-color: var(--palette-blush);
+}
+
+#main > #countdown {
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 1;
+  min-height: calc(100svh - var(--navbar-height));
+  background-color: var(--palette-blush);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #main > #countdown { position: relative; top: auto; }
+}
+
+#main > .hero-section {
+  --hero-progress: 0;
+  --hero-shrink: 34svh;
+  display: block;
+  height: calc(100svh - var(--navbar-height) - var(--hero-progress) * var(--hero-shrink));
+  min-height: 0;
+  padding: 0;
+  overflow: clip;
+}
+
+.hero-layout {
+  display: grid;
+  min-height: calc(100svh - var(--navbar-height));
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+@media (max-width: 1024px) {
+  #main > .hero-section { --hero-shrink: 26svh; }
+}
+
+.hero-photo {
+  aspect-ratio: 1365 / 2048;
+  border-radius: 12px;
+  max-width: min(100%, 440px, calc((100svh - 152px) * 1365 / 2048));
+  overflow: hidden;
+  border: 1px solid rgb(0 0 0 / 15%);
+}
+
+.hero-copy > .hero-invitation {
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.hero-details > li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+}
+
+.hero-detail-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.venue-photo {
+  height: clamp(180px, 25svh, 280px);
+}
+
+.venue-map {
+  height: clamp(240px, 32svh, 360px);
+}
+
+#the-day .mt-16 { margin-top: 2.5rem; }
+#the-day .mt-12 { margin-top: 2rem; }
+#the-day .md\:py-12 { padding-block: 2rem; }
+#questions h3 button { padding-block: 0.8rem; font-size: 1.5rem; }
+
+@media (max-width: 1023px) {
+  .hero-layout {
+    gap: 24px;
+    padding-block: 24px;
+  }
+
+  .hero-photo {
+    max-width: min(100%, 380px, calc((100svh - 80px) * 0.42 * 4672 / 7008));
+  }
+
+  .hero-copy h1 { font-size: clamp(3.8rem, 10vw, 6rem); }
+  .hero-copy > p { margin-top: 16px; font-size: 1.5rem; }
+  .hero-copy > .hero-invitation { margin: 0 0 16px; font-size: 1.125rem; }
+  .hero-copy > .mt-7 { margin-top: 16px; font-size: 1rem; }
+  .hero-copy > .mt-10 { margin-top: 20px; }
+  .hero-copy > .mt-10 a:not(.rsvp-button) { padding: 12px 20px; }
+}
+
+@media (max-width: 767px) {
+  .hero-layout { justify-items: center; }
+  .hero-copy { width: 100%; text-align: center; }
+  .hero-copy > .flex { justify-content: center; }
+  .hero-details { width: fit-content; margin-inline: auto; }
+  #main > section:not(#top) { padding-block: 40px; }
+  #main > section:not(#top):not(#countdown) h2 { font-size: 3rem; }
+  #main > section:not(#top):not(#countdown) p { font-size: 1rem; line-height: 1.5; }
+  #the-day .mt-16, #the-day .mt-12 { margin-top: 24px; }
+  #the-day .py-9, #the-day .md\:py-12 { padding-block: 12px; }
+  #the-day h3, #travel h3 { font-size: 1.5rem; }
+  #the-day .mt-4, #travel .mt-4 { margin-top: 12px; }
+  #the-day a:not(.rsvp-button) { padding: 12px 20px; font-size: 1rem; }
+  #travel .mt-14 { margin-top: 24px; }
+  #travel .p-7 { padding: 20px; }
+  #questions > div { gap: 28px; }
+  #questions h3 button { font-size: 1.125rem; line-height: 1.3; padding-block: 12px; }
+  #about .p-7 { padding: 20px; }
+  #about .mt-7 { margin-top: 20px; }
+}
+
+.envelope-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 28px 20px;
+  border: 0;
+  background: var(--palette-cream);
+  color: var(--site-text);
+  cursor: pointer;
+  touch-action: manipulation;
+  overflow: hidden;
+}
+
+.envelope-intro:focus-visible {
+  outline: 2px solid var(--palette-sand);
+  outline-offset: -8px;
+}
+
+.invitation-composition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(560px, 86vw, 68svh);
+}
+
+.invitation-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 34px;
+}
+
+.invitation-kicker,
+.invitation-hint {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: clamp(17px, 3.6vw, 23px);
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.invitation-names {
+  display: block;
+  margin-top: 13px;
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(64px, 13vw, 100px);
+  line-height: 0.95;
+  text-align: center;
+}
+
+.invitation-hint {
+  margin-top: 32px;
+  font-size: clamp(16px, 3.3vw, 21px);
+}
+
+.envelope {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 400 / 267;
+  isolation: isolate;
+  perspective: 1200px;
+  /* Keep the paper layers in one local stacking context. */
+  box-shadow: 0 12px 24px rgb(0 0 0 / 10%);
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: color-mix(in srgb, var(--palette-blush) 85%, var(--site-text));
+  border: 1px solid color-mix(in srgb, var(--palette-blush) 80%, var(--site-text));
+}
+
+.envelope-letter {
+  position: absolute;
+  inset: 7% 5% 3%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid var(--palette-sand);
+  background: var(--palette-cream);
+  color: var(--site-text);
+  box-shadow: 0 0 5px rgb(0 0 0 / 12%);
+}
+
+.envelope-letter-kicker {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: clamp(16px, 3.6vw, 22px);
+  text-transform: uppercase;
+}
+
+.envelope-letter-names {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(34px, 7.8vw, 56px);
+  line-height: 1.2;
+}
+
+.envelope-letter-date {
+  font-size: clamp(11px, 2.5vw, 14px);
+  letter-spacing: 0.2em;
+}
+
+.invitation-names,
+.envelope-letter-names,
+.envelope-seal span {
+  -webkit-text-stroke: 0.15px currentColor;
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  /* Clip the SVG's texture too, so it cannot cover the letter. */
+  clip-path: polygon(0 0, 50% 58.43%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: 100%;
+  height: 59.18%;
+  transform-origin: center top;
+  transform: rotateX(0deg);
+}
+
+.envelope-flap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 4%, 96.25% 21.52%, 52.75% 94.3%, 50% 100%, 47.25% 94.3%, 3.75% 21.52%, 0 4%);
+}
+
+.is-opening .envelope-flap {
+  animation: open-envelope-flap 0.65s ease-in-out forwards;
+}
+
+@keyframes open-envelope-flap {
+  0% { transform: rotateX(0deg); z-index: 4; }
+  49% { z-index: 4; }
+  50% { z-index: 1; }
+  100% { transform: rotateX(180deg); z-index: 1; }
+}
+
+.envelope-seal {
+  position: absolute;
+  top: 58.43%;
+  left: 50%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 17%;
+  aspect-ratio: 1;
+  margin-top: -8.5%;
+  margin-left: -8.5%;
+  padding: 6px;
+  border: 2px solid color-mix(in srgb, var(--palette-sand) 80%, var(--site-text));
+  border-radius: 48% 52% 46% 54%;
+  background: radial-gradient(ellipse at 35% 25%, var(--palette-cream), var(--palette-sand) 57%, color-mix(in srgb, var(--palette-sand) 85%, var(--site-text)));
+  box-shadow: inset 0 0 0 2px var(--palette-sand), inset 0 0 0 5px color-mix(in srgb, var(--palette-sand) 80%, var(--site-text)), 1px 4px 5px rgb(0 0 0 / 20%);
+  color: var(--site-text);
+}
+
+.envelope-seal span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--palette-sand) 70%, var(--site-text));
+  border-radius: 50%;
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(26px, 6vw, 40px);
+  line-height: 1;
+  text-shadow: 0 1px var(--palette-cream);
+  white-space: nowrap;
+  min-height: 0;
+}
+
+@media (max-height: 560px) {
+  .invitation-heading { margin-bottom: 18px; }
+  .invitation-names { font-size: 42px; }
+  .invitation-hint { margin-top: 18px; }
+  .invitation-composition { width: min(280px, 66vw, 48svh); }
+  .envelope-letter { gap: 5px; }
+  .envelope-letter-names { font-size: 24px; }
+  .envelope-letter-kicker { font-size: 12px; }
+  .envelope-letter-date { font-size: 9px; }
+  .envelope-seal span { font-size: 20px; }
+  .invitation-kicker, .invitation-hint { font-size: 14px; }
+}
+
+@media (min-height: 561px) and (max-height: 740px) {
+  .invitation-composition { width: min(480px, 86vw, 62svh); }
+  .invitation-names { font-size: clamp(60px, 12vw, 82px); }
+  .invitation-heading { margin-bottom: 26px; }
+  .invitation-hint { margin-top: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-opening .envelope-flap { animation: none; }
 }
