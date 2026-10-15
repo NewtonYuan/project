@@ -18,6 +18,15 @@ npm run preview
 
 The build checks TypeScript and produces the static site in `dist/`.
 
+## Background music
+
+`src/BackgroundMusic.tsx` plays the supplied “Love is A Choice” by Kris Bowers
+from `public/audio/love-is-a-choice.mp3`. Playback starts directly from the
+invitation click, loops at 25% volume, and does not load audio before that click.
+The floating button mutes or unmutes without restarting the song and remembers
+the visitor's mute preference in local storage. If playback is blocked, the
+button lets the visitor start it manually.
+
 ## RSVP responses
 
 The RSVP buttons open a form within the page. It asks for a name, email,

@@ -630,6 +630,35 @@ html:has(.envelope-intro)::-webkit-scrollbar-thumb {
   .faq-list { min-height: var(--faq-list-height, 0px); }
 }
 
+.music-toggle {
+  position: fixed;
+  right: calc(24px + env(safe-area-inset-right, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 110;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid var(--palette-blush);
+  border-radius: 50%;
+  background: var(--palette-cream);
+  color: var(--palette-rose);
+  box-shadow: 0 4px 16px rgb(70 39 29 / 10%);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.music-toggle svg { width: 24px; height: 24px; }
+.music-toggle:hover { background: var(--palette-rose); color: var(--palette-cream); }
+.music-toggle:focus-visible { outline: 2px solid var(--palette-rose); outline-offset: 4px; }
+@media (max-width: 767px) {
+  .music-toggle { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .music-toggle { transition: none; }
+}
+
 .envelope-intro {
   --invitation-paper: #fffaf5;
   position: fixed;

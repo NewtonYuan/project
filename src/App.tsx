@@ -6,6 +6,7 @@ import EnvelopeIntro, { invitationTiming } from './EnvelopeIntro'
 import { navigation, questions } from './weddingContent'
 import DayTimeline from './DayTimeline'
 import { AboutUs, OurTeam, DressCode } from './InformationSections'
+import BackgroundMusic, { type BackgroundMusicHandle } from './BackgroundMusic'
 
 // Add the remaining details once they are confirmed.
 const wedding = {
@@ -40,6 +41,7 @@ export default function App() {
   const [websiteRevealing, setWebsiteRevealing] = useState(false)
   const [invitationOpened, setInvitationOpened] = useState(false)
   const mainRef = useRef<HTMLElement>(null)
+  const musicRef = useRef<BackgroundMusicHandle>(null)
   const faqListRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
@@ -127,7 +129,11 @@ export default function App() {
 
   return (
     <>
-    {!invitationOpened && <EnvelopeIntro exiting={websiteRevealing} onContinue={() => setWebsiteRevealing(true)} onComplete={() => setInvitationOpened(true)} />}
+    <BackgroundMusic ref={musicRef} visible={websiteRevealing} />
+    {!invitationOpened && <EnvelopeIntro exiting={websiteRevealing} onContinue={() => {
+      musicRef.current?.start()
+      setWebsiteRevealing(true)
+    }} onComplete={() => setInvitationOpened(true)} />}
     <div
       className="min-h-svh overflow-x-clip bg-cream text-ink"
       inert={!invitationOpened}
