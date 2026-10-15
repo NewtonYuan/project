@@ -247,6 +247,7 @@ export default function App() {
                 <div className="body-copy mt-5 space-y-5">
                 <p>We recommend driving yourself. Markovina has a large on-site car park with space for up to 100 cars, with additional parking along Old Railway Road just outside the venue.</p>
                 <p>If you plan on drinking, we strongly advise taking an Uber or carpooling with a responsible driver. Please arrange your own transport to and from the venue.</p>
+                <p>Alternatively, you're welcome to leave your car at the venue overnight and collect it the following morning by 11:00am.</p>
                 </div>
               </div>
             </Reveal>
@@ -271,7 +272,7 @@ export default function App() {
               <h2 className="wedding-title text-center font-title font-medium md:text-left">A few <span className="block font-bold md:inline">questions</span></h2>
             </Reveal>
             <div ref={faqListRef} className="faq-list border-t border-ink/20">
-              {questions.map(({ question, answer, link }, index) => {
+              {questions.map(({ question, answer, link, emphasis }, index) => {
                 const isOpen = openQuestion === index
                 const panelId = `faq-answer-${index}`
                 const buttonId = `faq-question-${index}`
@@ -300,7 +301,14 @@ export default function App() {
                   >
                     <div className="min-h-0 overflow-hidden">
                     <div className="faq-answer-content body-copy max-w-xl space-y-4 pb-7 pr-8 pt-1 text-ink">
-                      {answer.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                      {answer.map((paragraph) => {
+                        const emphasisIndex = emphasis ? paragraph.indexOf(emphasis.text) : -1
+                        return <p key={paragraph}>{emphasis && emphasisIndex >= 0 ? <>
+                          {paragraph.slice(0, emphasisIndex)}
+                          <strong className={emphasis.underline ? 'underline underline-offset-4' : undefined}>{emphasis.text}</strong>
+                          {paragraph.slice(emphasisIndex + emphasis.text.length)}
+                        </> : paragraph}</p>
+                      })}
                       {link && <a href={link.href} className="inline-block underline underline-offset-4">{link.label}</a>}
                     </div>
                     </div>

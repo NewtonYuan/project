@@ -40,7 +40,14 @@ export const loveStories: Record<string, string[]> = {
   ],
 }
 
-export const questions = [
+type FaqQuestion = {
+  question: string
+  answer: string[]
+  link?: { href: string; label: string }
+  emphasis?: { text: string; underline?: boolean }
+}
+
+export const questions: FaqQuestion[] = [
   { question: 'When should I arrive?', answer: [
     'Our ceremony will begin at 3:00 pm. We welcome guests to arrive between 2:30 pm and 3:00 pm to allow plenty of time to park, settle in and find a seat before the ceremony begins.',
   ] },
@@ -49,7 +56,7 @@ export const questions = [
   ], link: { href: '#dress-code', label: 'See the dress code' } },
   { question: 'Can I bring an extra guest or children?', answer: [
     'As much as we’d love to celebrate with everyone, our venue has a limited capacity and we’re keeping our wedding to those personally invited.',
-    'Please refer to your invitation or RSVP details for the guests included in your invitation. We kindly ask that additional guests or children are not brought unless they have been specifically invited.',
+    'Please refer to your invitation for the guests included in your invitation. We kindly ask that additional guests or children are not brought unless they have been specifically invited.',
     'Thank you for understanding and helping us keep our celebration intimate with our closest family and friends.',
   ] },
   { question: 'Where is the venue?', answer: [
@@ -59,6 +66,7 @@ export const questions = [
   { question: 'Will there be parking and transport?', answer: [
     'There is plenty of complimentary parking available on-site, with space for up to 100 cars.',
     'Guests will need to arrange their own transport to and from the venue. If you’re planning on drinking, please organise a responsible driver so everyone can get home safely.',
+    "Alternatively, you're welcome to leave your car at the venue overnight and collect it the following morning by 11:00am.",
   ] },
   { question: 'Can you accommodate dietary requirements?', answer: [
     'Please let us know about your dietary requirements or allergies using the RSVP form.',
@@ -71,8 +79,12 @@ export const questions = [
   { question: 'How do I RSVP?', answer: [
     'You can RSVP using the form at the bottom of this page. Please let us know whether you’ll be attending and include any dietary requirements we should be aware of.',
     'Each guest should submit their own RSVP.',
-    'The RSVP form will let you know when responses are open, and we’ll add the final RSVP deadline once confirmed.',
-  ], link: { href: '#rsvp', label: 'Go to RSVP' } },
+    'Kindly submit your RSVP by 15 February 2027 to help us finalise arrangements.',
+  ], emphasis: { text: '15 February 2027', underline: true }, link: { href: '#rsvp', label: 'Go to RSVP' } },
+  { question: 'What if I RSVP but can no longer make it?', answer: [
+    "We understand that plans can change! But please don't be a bum and cancel on us last minute.",
+    "If you're no longer able to attend, please let us know as soon as possible so we can make the necessary adjustments to our arrangements. We really appreciate your understanding.",
+  ], emphasis: { text: 'as soon as possible' } },
   { question: 'Who should I contact on the day?', answer: [
     'Before the wedding: feel free to reach out to Newton or Annie through your usual method of contact if you have any questions leading up to the day.',
     'On the wedding day: we’ll probably be a little busy getting married! For any questions or help on the day, please contact Mason — Best Man, or Deborah — Maid of Honour.',

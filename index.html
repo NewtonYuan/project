@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      history.scrollRestoration = 'manual'
+      if (location.hash) {
+        history.replaceState(history.state, '', location.pathname + location.search)
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    </script>
     <meta name="description" content="Celebrate the wedding of Newton Yuan and Annie Zheng on 22 March 2027. Find the countdown, schedule, travel details, and RSVP updates." />
     <meta name="theme-color" content="#FFF9F2" />
     <link rel="icon" type="image/png" sizes="32x32" href="/tab-icon-32.png" />
