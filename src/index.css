@@ -525,7 +525,9 @@ html:has(.envelope-intro)::-webkit-scrollbar-thumb {
     padding-block: 0;
     overflow-y: auto;
     overscroll-behavior-y: contain;
+    scrollbar-width: none;
   }
+  .couple-profile-story::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .couple-profile-inner { transition: none; }
@@ -724,6 +726,17 @@ html:has(.envelope-intro)::-webkit-scrollbar-thumb {
 
 #rsvp > footer {
   margin-top: 48px;
+}
+
+@media (max-width: 767px) {
+  #main > section#rsvp { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+  .wedding-footer { width: 100%; container-type: inline-size; }
+  .wedding-footer .brand-name {
+    gap: clamp(6px, 2cqi, 12px);
+    font-size: clamp(0.875rem, 6cqi, 1.5rem);
+  }
+  .wedding-footer .brand-name span { white-space: nowrap; }
+  .wedding-footer > .mt-2 { font-size: clamp(0.75rem, 4.5cqi, 1rem); }
 }
 
 @media (min-width: 1024px) {

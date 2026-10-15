@@ -320,7 +320,7 @@ export default function App() {
         </section>
 
         <Rsvp>
-          <footer className="small-copy shrink-0 text-center text-ink">
+          <footer className="wedding-footer small-copy shrink-0 text-center text-ink">
             <p className="brand-name flex items-center justify-center gap-3">
               <img src="/images/wedding-logo.png" alt="" width="512" height="512" className="size-[1em] shrink-0 object-contain" />
               <span>{wedding.names}</span>
