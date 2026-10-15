@@ -98,8 +98,14 @@ export function DressCode() {
         <h3 id="dress-code-title" className="content-title">Dress code</h3>
         <p className="body-copy mt-5"><strong>Cocktail / Semi-Formal</strong></p>
         <p className="body-copy mt-5">Not sure what to wear? See some examples below, but feel free to dress up and make it your own.</p>
-        <p className="body-copy mt-4">For the gentlemen, suits are welcome but not essential.</p>
-        <p className="body-copy mt-4">For the ladies, we welcome all styles and colours - just no white, please!</p>
+        <p className="body-copy mt-4 grid grid-cols-[24px_minmax(0,1fr)] items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" className="groom-title mt-0.5 size-6" aria-hidden="true"><path d="M400-80v-280h-80v-240q0-33 23.5-56.5T400-680h160q33 0 56.5 23.5T640-600v240h-80v280H400Zm80-640q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720Z" /></svg>
+          <span>For the gentlemen, suits are welcome but not essential.</span>
+        </p>
+        <p className="body-copy mt-4 grid grid-cols-[24px_minmax(0,1fr)] items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" className="bride-title mt-0.5 size-6" aria-hidden="true"><path d="M400-80v-240H280l122-308q10-24 31-38t47-14q26 0 47 14t31 38l122 308H560v240H400Zm23.5-663.5Q400-767 400-800t23.5-56.5Q447-880 480-880t56.5 23.5Q560-833 560-800t-23.5 56.5Q513-720 480-720t-56.5-23.5Z" /></svg>
+          <span>For the ladies, we welcome all styles and colours - just no white, please!</span>
+        </p>
         <p className="body-copy mt-4">We can’t wait to see you looking and feeling your best as we celebrate together.</p>
       <a href="/images/dress-code.png" target="_blank" rel="noopener noreferrer" aria-label="Open the dress code outfit inspiration image at full size" className="mt-6 block">
         <img {...responsiveImage('/images/dress-code.png', '(min-width: 1280px) 580px, (min-width: 1024px) 45vw, 90vw')} alt="Cocktail and semi-formal outfit inspiration: colourful dresses, tailored trousers, shirts and suits" loading="lazy" className="w-full rounded-xl" />
