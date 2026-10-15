@@ -16,7 +16,7 @@ targets = {
     'nadi.jpg': [320, 640],
     'phoebe.jpg': [320, 640],
     'markovina-venue.png': [768, 1440],
-    'dress-code.jpg': [768],
+    'dress-code.png': [768, 1440],
     'rsvp-portrait.jpg': [480, 960],
 }
 manifest = {}

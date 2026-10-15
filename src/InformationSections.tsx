@@ -95,12 +95,14 @@ export function OurTeam() {
 export function DressCode() {
   return <aside id="dress-code" aria-labelledby="dress-code-title" className="min-w-0 scroll-mt-28">
       <Reveal>
-        <h3 id="dress-code-title" className="content-title">Dress <span className="font-medium">code</span></h3>
+        <h3 id="dress-code-title" className="content-title">Dress code</h3>
         <p className="body-copy mt-5"><strong>Cocktail / Semi-Formal</strong></p>
-        <p className="body-copy mt-5">We’d love for you to join us dressed in cocktail or semi-formal attire. Think elevated, stylish and wedding ready!</p>
-        <p className="body-copy mt-4">Elegant, colourful long dresses or satin dresses up to knee length; classic suits or smart, polished looks with ties optional.</p>
-      <a href="/images/dress-code.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the dress code outfit inspiration image at full size" className="mt-6 block">
-        <img {...responsiveImage('/images/dress-code.jpg', '(min-width: 1280px) 580px, (min-width: 1024px) 45vw, 90vw')} alt="Cocktail and semi-formal outfit inspiration: long floral and satin dresses, classic suits and polished looks with optional ties" loading="lazy" className="w-full rounded-xl border border-ink/10" />
+        <p className="body-copy mt-5">Not sure what to wear? See some examples below, but feel free to dress up and make it your own.</p>
+        <p className="body-copy mt-4">For the gentlemen, suits are welcome but not essential.</p>
+        <p className="body-copy mt-4">For the ladies, we welcome all styles and colours - just no white, please!</p>
+        <p className="body-copy mt-4">We can’t wait to see you looking and feeling your best as we celebrate together.</p>
+      <a href="/images/dress-code.png" target="_blank" rel="noopener noreferrer" aria-label="Open the dress code outfit inspiration image at full size" className="mt-6 block">
+        <img {...responsiveImage('/images/dress-code.png', '(min-width: 1280px) 580px, (min-width: 1024px) 45vw, 90vw')} alt="Cocktail and semi-formal outfit inspiration: colourful dresses, tailored trousers, shirts and suits" loading="lazy" className="w-full rounded-xl" />
       </a>
       </Reveal>
   </aside>

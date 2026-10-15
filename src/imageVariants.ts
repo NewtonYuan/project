@@ -45,10 +45,10 @@ export const imageVariants: Record<string, { srcSet: string; width: number; heig
     "width": 2880,
     "height": 1350
   },
-  "/images/dress-code.jpg": {
-    "srcSet": "/images/dress-code.jpg 1536w",
-    "width": 1536,
-    "height": 1024
+  "/images/dress-code.png": {
+    "srcSet": "/images/dress-code-768-lossless.webp 768w, /images/dress-code-1440-lossless.webp 1440w, /images/dress-code.png 2657w",
+    "width": 2657,
+    "height": 1384
   },
   "/images/rsvp-portrait.jpg": {
     "srcSet": "/images/rsvp-portrait-480-lossless.webp 480w, /images/rsvp-portrait.jpg 1600w",
