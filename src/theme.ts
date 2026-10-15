@@ -4,6 +4,7 @@ export const theme = {
     cream: '#FFF9F2',
     sand: '#D9C5A6',
     blush: '#E7C6C0',
+    rose: '#9B4F64',
     lavender: '#DACBE4',
     sage: '#B9C5AE',
     blue: '#166198',

@@ -93,9 +93,6 @@ planning PDF and stored at `public/images/dress-code.jpg`.
 
 Still to finish:
 
-- Annie and Newton's individual love stories (up to 100 words each).
-- Newton's MBTI, if it should be shown.
-- Final food and beverage details.
 - RSVP deadline and a Formspree endpoint for collecting responses.
 - Digital gift contribution details closer to the day.
 

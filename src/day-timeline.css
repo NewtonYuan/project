@@ -1,7 +1,9 @@
 .day-timeline {
-  --timeline-axis: 210px;
+  --timeline-axis: 50%;
   position: relative;
-  margin: 56px 0 0;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
 }
 
 .day-timeline-list {
@@ -17,13 +19,14 @@
   top: 0;
   bottom: 0;
   width: 2px;
+  transform: translateX(-50%);
   background: var(--palette-blush);
 }
 
 .day-timeline-item {
   display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
-  gap: 64px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
   align-items: baseline;
   min-height: 112px;
   padding-bottom: 36px;
@@ -34,25 +37,40 @@
   font-size: clamp(1.5rem, 2.3vw, 2rem);
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
-  transform-origin: left center;
-  transition: transform 0.22s ease;
+  text-align: right;
+  transform-origin: right center;
+  transform: scale(0.92);
+  font-weight: 500;
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .day-timeline-event h3 {
   margin: 0;
-  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-size: clamp(2rem, 3vw, 3rem);
   line-height: 1;
   letter-spacing: -0.04em;
   transform-origin: left center;
-  transition: transform 0.22s ease;
+  transform: scale(0.92);
+  font-weight: 500;
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.day-timeline-item.is-active .day-timeline-time { transform: translateX(2px) scale(1.06); }
-.day-timeline-item.is-active h3 { transform: scale(1.04); }
+.day-timeline-item.is-active .day-timeline-time {
+  transform: scale(1.14);
+  font-weight: 700;
+  opacity: 1;
+}
+.day-timeline-item.is-active h3 {
+  transform: scale(1.14);
+  font-weight: 700;
+  opacity: 1;
+}
 
 .day-timeline-marker {
   position: absolute;
-  left: calc(var(--timeline-axis) + 1px);
+  left: var(--timeline-axis);
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -76,16 +94,16 @@
 }
 
 @media (max-width: 767px) {
-  .day-timeline { --timeline-axis: 7px; margin-top: 36px; }
+  .day-timeline { transform: translateX(-40px); }
   .day-timeline-item {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
-    padding-left: 40px;
-    padding-bottom: 32px;
-    min-height: 132px;
+    gap: 24px;
+    padding-bottom: 18px;
+    min-height: 68px;
   }
-  #the-day .day-timeline-event h3 { font-size: clamp(2rem, 6.8vw, 2.75rem); }
-  #the-day .day-timeline-time { font-size: 1.5rem; }
+  #the-day .day-timeline-event h3 { font-size: clamp(2rem, 7vw, 2.5rem); }
+  #main #the-day .day-timeline-time { font-size: 1.75rem; line-height: 1.2; }
+  .day-timeline-item.is-active .day-timeline-time,
+  .day-timeline-item.is-active h3 { transform: scale(1.22); }
 }
 
 @media (prefers-reduced-motion: reduce) {

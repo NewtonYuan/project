@@ -8,7 +8,6 @@ import '@fontsource/cormorant-infant/500.css'
 import '@fontsource/cormorant-infant/700.css'
 import '@fontsource/lato/400.css'
 import '@fontsource/lato/700.css'
-import '@fontsource/pinyon-script/400.css'
 import 'lenis/dist/lenis.css'
 import './index.css'
 

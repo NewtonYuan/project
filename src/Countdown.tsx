@@ -110,7 +110,7 @@ export default function Countdown() {
   return (
     <section id="countdown" className="countdown-section" aria-labelledby="countdown-title">
       <div className="countdown-content">
-        <h2 id="countdown-title" className="countdown-title">Countdown</h2>
+        <h2 id="countdown-title" className="countdown-title wedding-title font-bold">Countdown</h2>
         <div className="countdown-grid" role="timer" aria-live="off" aria-label={`${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, and ${remaining.seconds} seconds until 22 March 2027 at 2:30 pm NZDT`}>
           {units.map((unit) => <FlipUnit key={unit.label} {...unit} />)}
         </div>
