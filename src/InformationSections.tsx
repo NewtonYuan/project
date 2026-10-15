@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { loveStories, weddingParty } from './weddingContent'
+import { responsiveImage } from './responsiveImage'
 
 function Reveal({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.7, ease: 'easeOut' }} className={className}>{children}</motion.div>
@@ -27,7 +28,7 @@ function CoupleProfileCard({ name, fullName, facts }: { name: string; fullName: 
     <div className="couple-profile-inner">
       <div className="profile-card couple-profile-face couple-profile-front" aria-hidden={flipped} inert={flipped}>
         <div className={`profile-card-photo profile-card-photo--${name.toLowerCase()}`}>
-          <img src={`/images/${name.toLowerCase()}.jpg`} alt={fullName} loading="lazy" />
+          <img {...responsiveImage(`/images/${name.toLowerCase()}.jpg`, '(min-width: 1232px) 564px, (min-width: 768px) calc(50vw - 52px), calc(100vw - 48px)')} alt={fullName} loading="lazy" />
         </div>
         <div className="profile-card-content">
           <h3 className="card-title">{fullName}</h3>
@@ -78,7 +79,7 @@ export function OurTeam() {
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {weddingParty.map(({ name, role, photo }) => <Reveal key={name} className="profile-card team-profile-card">
           <div className="team-profile-photo">
-            {photo ? <img src={photo} alt={name} loading="lazy" /> : <span aria-hidden="true">{name.charAt(0)}</span>}
+            {photo ? <img {...responsiveImage(photo, '(min-width: 1024px) 150px, (min-width: 768px) 22vw, 40vw')} alt={name} loading="lazy" /> : <span aria-hidden="true">{name.charAt(0)}</span>}
           </div>
           <div className="team-profile-content">
             <h3 className={`card-title ${role === 'Best Man' || role === 'Groomsman' ? 'groom-title' : 'bride-title'}`}>{name}</h3>
@@ -99,7 +100,7 @@ export function DressCode() {
         <p className="body-copy mt-5">We’d love for you to join us dressed in cocktail or semi-formal attire. Think elevated, stylish and wedding ready!</p>
         <p className="body-copy mt-4">Elegant, colourful long dresses or satin dresses up to knee length; classic suits or smart, polished looks with ties optional.</p>
       <a href="/images/dress-code.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the dress code outfit inspiration image at full size" className="mt-6 block">
-        <img src="/images/dress-code.jpg" alt="Cocktail and semi-formal outfit inspiration: long floral and satin dresses, classic suits and polished looks with optional ties" width="1536" height="1024" loading="lazy" className="w-full rounded-xl border border-ink/10" />
+        <img {...responsiveImage('/images/dress-code.jpg', '(min-width: 1280px) 580px, (min-width: 1024px) 45vw, 90vw')} alt="Cocktail and semi-formal outfit inspiration: long floral and satin dresses, classic suits and polished looks with optional ties" loading="lazy" className="w-full rounded-xl border border-ink/10" />
       </a>
       </Reveal>
   </aside>

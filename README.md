@@ -27,26 +27,53 @@ The floating button mutes or unmutes without restarting the song and remembers
 the visitor's mute preference in local storage. If playback is blocked, the
 button lets the visitor start it manually.
 
+## Performance
+
+Photos use responsive, lossless WebP copies through `src/responsiveImage.ts`.
+The original images remain available as full-resolution fallbacks. Couple-card
+copies match the existing 4:3 crop and object position, so image framing stays
+the same. Other portraits retain their original framing and colour profiles.
+
+At the tested 1280px desktop viewport and 1x pixel density, profile, wedding-party,
+and venue photos total about 2.4 MB instead of 22.6 MB. Larger displays can
+select larger variants or the originals. The production JavaScript bundle is
+about 375 KB (119 KB gzip), down from 418 KB (132 KB gzip), using Motion's
+animation features without its unused layout/drag features.
+
+The countdown pauses updates when the tab is hidden, catches up on return, and
+only rerenders cards whose values change. Music quality and scrolling settings
+are unchanged.
+
+To regenerate image copies with Python and Pillow, run
+`python scripts/optimize-images.py`. The script verifies lossless decoding
+against every prepared image and skips copies larger than the originals.
+
 ## RSVP responses
 
-The RSVP buttons open a form within the page. It asks for a name, email,
-attendance, and the names of invited people accepting or declining. Guests
-accepting can also add dietary needs. Both choices reveal their fields with a
-smooth animation.
-The form uses Formspree to collect submissions without a custom server. To
-activate it:
+The individual RSVP form collects name, email, attendance, dietary needs, and
+an optional message. It sends replies through [FormSubmit](https://formsubmit.co/)
+to `newtonkme@gmail.com`, without a server, API key, or service account. Guests
+stay on the website. The subject includes the guest's name and attendance, and
+email replies can be sent to the guest's supplied address.
 
-1. Create a form at [Formspree](https://formspree.io/) and choose the email
-   address that should receive RSVP notifications.
-2. Copy `.env.example` to `.env` and set `VITE_RSVP_ENDPOINT` to the form's
-   public `https://formspree.io/f/...` endpoint.
-3. Restart the dev server, or set the same environment variable in your hosting
-   provider before building. Send a test RSVP and confirm it appears in the
-   Formspree inbox before sharing the site.
+Before sharing the website with guests:
 
-Until the endpoint is set, the form is a clearly labelled preview and its send
-button is disabled. The endpoint is public by design; do not put secret API
-keys in `VITE_` variables. The RSVP deadline has not yet been set.
+1. Submit a test RSVP from the website. FormSubmit will send its activation
+   email to `newtonkme@gmail.com` on first use.
+2. Open that email (check spam too) and confirm the form.
+3. Submit another test RSVP and verify the actual reply email arrives. Delivery
+   has not been confirmed until this final check succeeds.
+
+No environment variable is required for the default inbox. To change the
+endpoint, set `VITE_RSVP_ENDPOINT` using `.env.example` locally or in hosting
+configuration and rebuild. Formspree `https://formspree.io/f/...` overrides
+remain supported. These endpoints are public; never put an email password or
+secret API key in a `VITE_` variable.
+
+Requests time out after 20 seconds. Failed requests and provider rejections keep
+the guest's answers for retry. The hidden spam field is mapped for each service.
+Run `npm run test:rsvp` on Node 22.6+ to check request formatting and rejection
+handling with mocked requests; the tests never send real emails.
 
 The single-page site in `src/App.tsx` has sections for the invitation, day
 schedule, venue, directions and travel, accommodations, dress code, FAQs,

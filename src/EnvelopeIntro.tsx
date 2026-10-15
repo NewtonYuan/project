@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { m as motion, useReducedMotion } from 'motion/react'
 
 export const invitationTiming = {
   sealDuration: 0.18,

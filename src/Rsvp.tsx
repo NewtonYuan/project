@@ -1,6 +1,8 @@
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { responsiveImage } from './responsiveImage'
+import { submitRsvp } from './rsvpSubmission'
 
-const endpoint = import.meta.env.VITE_RSVP_ENDPOINT?.trim()
+const endpoint = import.meta.env.VITE_RSVP_ENDPOINT?.trim() || 'https://formsubmit.co/ajax/newtonkme@gmail.com'
 const fieldClass = 'body-copy mt-2 w-full rounded-xl border border-ink/25 bg-white px-4 py-3 text-ink outline-offset-2 focus-visible:outline-2 focus-visible:outline-ink'
 
 type RsvpProps = {
@@ -10,22 +12,27 @@ type RsvpProps = {
 export default function Rsvp({ children }: RsvpProps) {
   const [attendance, setAttendance] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const formRef = useRef<HTMLFormElement>(null)
+  const successRef = useRef<HTMLDivElement>(null)
+  const resetting = useRef(false)
+
+  useEffect(() => {
+    if (status === 'success') successRef.current?.focus({ preventScroll: true })
+    if (status === 'idle' && resetting.current) {
+      resetting.current = false
+      formRef.current?.querySelector<HTMLInputElement>('[name="name"]')?.focus({ preventScroll: true })
+    }
+  }, [status])
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!endpoint || status === 'sending') return
+    if (status === 'sending') return
 
     const form = event.currentTarget
     setStatus('sending')
 
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
-      })
-
-      if (!response.ok) throw new Error('RSVP submission failed')
+      await submitRsvp(endpoint, new FormData(form))
 
       form.reset()
       setAttendance('')
@@ -42,16 +49,21 @@ export default function Rsvp({ children }: RsvpProps) {
         <p className="body-copy mx-auto mt-7 max-w-xl">We’d love to celebrate with you.</p>
         <div className="rsvp-layout mt-12 grid gap-6 lg:mt-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-10">
           <div className="rsvp-photo">
-            <img src="/images/rsvp-portrait.jpg" alt="Newton and Annie together beneath Annie’s veil" width="1600" height="2400" loading="lazy" />
+            <img {...responsiveImage('/images/rsvp-portrait.jpg', '(min-width: 1280px) 470px, (min-width: 1024px) 38vw, 90vw')} alt="Newton and Annie together beneath Annie’s veil" loading="lazy" />
           </div>
           <div className="rsvp-response rounded-xl border border-ink/10 bg-cream p-6 text-left sm:p-8 lg:p-10">
-            {status === 'success' ? (
-              <div role="status" className="py-8 text-center">
-                <h3 className="content-title">Thank you!</h3>
-                <p className="body-copy mx-auto mt-4 max-w-lg">Your reply has been sent.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
+            <div className="rsvp-panel-content">
+              {status === 'success' && (
+                <div ref={successRef} role="status" tabIndex={-1} className="rsvp-success text-center outline-none">
+                  <h3 className="content-title">Thank you!</h3>
+                  <p className="body-copy mx-auto mt-4 max-w-lg">Your reply has been sent.</p>
+                  <button type="button" className="rsvp-button mt-8 inline-flex" onClick={() => {
+                    resetting.current = true
+                    setStatus('idle')
+                  }}>Submit another response</button>
+                </div>
+              )}
+              <form ref={formRef} onSubmit={handleSubmit} className={status === 'success' ? 'invisible' : undefined} inert={status === 'success'} aria-hidden={status === 'success'}>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <label className="form-label block" htmlFor="rsvp-name">Full name *
                     <input id="rsvp-name" name="name" type="text" autoComplete="name" required maxLength={120} className={fieldClass} />
@@ -89,12 +101,12 @@ export default function Rsvp({ children }: RsvpProps) {
 
                 {status === 'error' && <p role="alert" className="body-copy mt-6">We couldn’t send your reply. Please try again; your answers are still here.</p>}
 
-                <button type="submit" disabled={!endpoint || status === 'sending'} className={`rsvp-button mt-8 inline-flex gap-3${status === 'sending' ? ' is-active' : ''}`}>
+                <button type="submit" disabled={status === 'sending'} className={`rsvp-button mt-8 inline-flex gap-3${status === 'sending' ? ' is-active' : ''}`}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" className="size-6 shrink-0" aria-hidden="true"><path d="M792-443 176-183q-20 8-38-3.5T120-220v-520q0-22 18-33.5t38-3.5l616 260q25 11 25 37t-25 37ZM200-280l474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" /></svg>
                   <span>{status === 'sending' ? 'Sending…' : 'Send reply'}</span>
                 </button>
               </form>
-            )}
+            </div>
           </div>
         </div>
       </div>

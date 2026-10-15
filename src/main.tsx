@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { MotionConfig } from 'motion/react'
+import { LazyMotion, MotionConfig, domAnimation } from 'motion/react'
 import { ReactLenis } from 'lenis/react'
 import App from './App'
 import { theme } from './theme'
@@ -21,6 +21,7 @@ const isMobileTouchViewport = window.innerWidth <= 1024 && window.matchMedia('(p
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MotionConfig reducedMotion="user">
+      <LazyMotion features={domAnimation} strict>
       <ReactLenis root options={{
         autoRaf: true,
         anchors: true,
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')!).render(
       }}>
         <App />
       </ReactLenis>
+      </LazyMotion>
     </MotionConfig>
   </StrictMode>,
 )

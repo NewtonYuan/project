@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { m as motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { schedule } from './weddingContent'
 import './day-timeline.css'
 

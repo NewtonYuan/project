@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 import './countdown.css'
 
@@ -21,17 +21,26 @@ function useCountdown() {
   const [remaining, setRemaining] = useState(timeLeft)
 
   useEffect(() => {
-    let timeout: number
+    let timeout: number | undefined
 
     function tick() {
       setRemaining(timeLeft())
-      if (Date.now() < targetTime) {
+      if (!document.hidden && Date.now() < targetTime) {
         timeout = window.setTimeout(tick, 1000 - (Date.now() % 1000) + 10)
       }
     }
 
-    tick()
-    return () => window.clearTimeout(timeout)
+    function resumeWhenVisible() {
+      window.clearTimeout(timeout)
+      if (!document.hidden) tick()
+    }
+
+    if (!document.hidden) tick()
+    document.addEventListener('visibilitychange', resumeWhenVisible)
+    return () => {
+      window.clearTimeout(timeout)
+      document.removeEventListener('visibilitychange', resumeWhenVisible)
+    }
   }, [])
 
   return remaining
@@ -56,7 +65,7 @@ function DigitHalf({ value, position, className = '' }: { value: string; positio
   )
 }
 
-function FlipUnit({ label, value }: { label: string; value: string }) {
+const FlipUnit = memo(function FlipUnit({ label, value }: { label: string; value: string }) {
   const [frame, setFrame] = useState<FlipFrame>({ current: value, previous: value, flipping: false, sequence: 0 })
   const reducedMotion = useReducedMotion()
 
@@ -96,7 +105,7 @@ function FlipUnit({ label, value }: { label: string; value: string }) {
       </div>
     </div>
   )
-}
+})
 
 export default function Countdown() {
   const remaining = useCountdown()

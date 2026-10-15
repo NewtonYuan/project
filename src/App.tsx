@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, type MotionStyle } from 'motion/react'
+import { AnimatePresence, m as motion, useReducedMotion, useScroll, useTransform, type MotionStyle } from 'motion/react'
 import Countdown from './Countdown'
 import Rsvp from './Rsvp'
 import EnvelopeIntro, { invitationTiming } from './EnvelopeIntro'
@@ -7,6 +7,7 @@ import { navigation, questions } from './weddingContent'
 import DayTimeline from './DayTimeline'
 import { AboutUs, OurTeam, DressCode } from './InformationSections'
 import BackgroundMusic, { type BackgroundMusicHandle } from './BackgroundMusic'
+import { responsiveImage } from './responsiveImage'
 
 // Add the remaining details once they are confirmed.
 const wedding = {
@@ -190,7 +191,7 @@ export default function App() {
                 <span>{wedding.location}</span>
               </li>
             </ul>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="hero-actions mt-10 flex flex-wrap gap-3">
               <a href="#rsvp" className="rsvp-button inline-flex gap-3"><SendIcon /><span>RSVP</span></a>
             </div>
           </Reveal>
@@ -225,7 +226,7 @@ export default function App() {
             <div className="mt-16 grid items-center gap-10 md:mt-20 md:grid-cols-2 lg:gap-x-16 lg:gap-y-14">
             <div className="venue-photo w-full overflow-hidden border border-ink/20 bg-cream">
               <img
-                src="/images/markovina-venue.png"
+                {...responsiveImage('/images/markovina-venue.png', '(min-width: 1280px) 600px, (min-width: 768px) 46vw, 90vw')}
                 alt="Markovina Vineyard Estate garden and buildings beside a flowering tree"
                 width="2880"
                 height="1350"

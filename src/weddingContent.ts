@@ -28,8 +28,9 @@ export const weddingParty = [
 
 export const loveStories: Record<string, string[]> = {
   Annie: [
-    'I still remember when Newton and I first met. We were both pretty awkward and little did I know, how much we would come to love each other.',
-    'To be honest, I wasn’t sure where our relationship would lead. But through all the experiences we’ve shared, he’s shown me time and time again how he’ll always be there for me. He brings so much joy and laughter into my life, and even though he tests my patience sometimes, I wouldn’t have it any other way.',
+    'Fun fact: Newton and I met at a social club event, and the event was literally to bond over food.',
+    "Although we didn't speak much that day (busy eating - jk), we somehow managed to start messaging each other a lot and went on more food outings :P",
+    "At first, I wasn't sure about dating someone younger, but Newton gets a special exception. He's shown me time and time again how loving, caring and supportive one can be. I love him with all my heart, and I can't wait to share life's adventures with him.",
   ],
   Newton: [
     'I met Annie at a University event, and I was allocated to the group which she was in.',
