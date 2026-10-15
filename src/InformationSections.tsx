@@ -40,14 +40,14 @@ function CoupleProfileCard({ name, fullName, facts }: { name: string; fullName: 
         </div>
       </div>
       <div className="profile-card couple-profile-face couple-profile-back" aria-hidden={!flipped} inert={!flipped}>
-        <div className="couple-profile-story">
+        <div className="couple-profile-story" data-lenis-prevent role="region" aria-label={`${name}’s love story`} tabIndex={flipped ? 0 : -1}>
           <p className={`small-copy mb-4 ${accentClass}`}>{name}’s side</p>
           <h3 className="content-title">{name === 'Annie' ? 'Her love story' : 'His love story'}</h3>
           <div className="body-copy mt-7 space-y-4">
             {loveStories[name].map(paragraph => <p key={paragraph}>{paragraph}</p>)}
           </div>
         </div>
-        <p className={`couple-profile-hint small-copy ${accentClass}`}><span aria-hidden="true">↶</span> Back to my profile</p>
+        <button type="button" className={`couple-profile-hint small-copy ${accentClass}`} onClick={() => setFlipped(false)}><span aria-hidden="true">↶</span> Back to my profile</button>
       </div>
     </div>
   </div>

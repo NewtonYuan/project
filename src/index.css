@@ -479,11 +479,13 @@ html:has(.envelope-intro)::-webkit-scrollbar-thumb {
   outline-offset: 5px;
 }
 .couple-profile-inner {
+  position: relative;
   display: grid;
   transform-style: preserve-3d;
   transition: transform 750ms cubic-bezier(.22, .68, .2, 1);
 }
 .couple-profile.is-flipped .couple-profile-inner { transform: rotateY(180deg); }
+.couple-profile.is-flipped .couple-profile-toggle { pointer-events: none; }
 .couple-profile-face {
   grid-area: 1 / 1;
   min-width: 0;
@@ -505,7 +507,26 @@ html:has(.envelope-intro)::-webkit-scrollbar-thumb {
   margin-top: 28px;
   font-weight: 700;
 }
-.couple-profile-back .couple-profile-hint { margin-top: 24px; }
+.couple-profile-back .couple-profile-hint {
+  flex-shrink: 0;
+  margin-top: 24px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .couple-profile-back { position: absolute; inset: 0; min-height: 0; padding: 24px; }
+  .couple-profile-story {
+    flex: 1;
+    min-height: 0;
+    margin-block: 0;
+    padding-block: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .couple-profile-inner { transition: none; }
 }
