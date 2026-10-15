@@ -41,7 +41,7 @@ keys in `VITE_` variables. The RSVP deadline has not yet been set.
 
 The single-page site in `src/App.tsx` has sections for the invitation, day
 schedule, venue, directions and travel, accommodations, dress code, FAQs,
-registry guidance, and RSVP. The hero uses `public/images/couple-hero.jpg`; the venue section uses
+registry guidance, and RSVP. The hero uses responsive `public/images/couple-hero-*.webp` images; the venue section uses
 `public/images/markovina-venue.png`.
 Motion reveals sections as they enter the viewport.
 

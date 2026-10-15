@@ -56,9 +56,10 @@ export default function App() {
       mainRef.current?.focus({ preventScroll: true })
       return
     }
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previousOverflow }
+    const root = document.documentElement
+    const previousOverflowY = root.style.overflowY
+    root.style.overflowY = 'hidden'
+    return () => { root.style.overflowY = previousOverflowY }
   }, [invitationOpened])
 
   useEffect(() => {
@@ -127,12 +128,9 @@ export default function App() {
   return (
     <>
     {!invitationOpened && <EnvelopeIntro exiting={websiteRevealing} onContinue={() => setWebsiteRevealing(true)} onComplete={() => setInvitationOpened(true)} />}
-    {websiteRevealing && <motion.div
+    <div
       className="min-h-svh overflow-x-clip bg-cream text-ink"
       inert={!invitationOpened}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : 56 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: reduceMotion ? 0 : invitationTiming.revealDelay, duration: reduceMotion ? 0.2 : invitationTiming.revealDuration, ease: [0.22, 1, 0.36, 1] }}
     >
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
 
@@ -165,13 +163,16 @@ export default function App() {
 
       <main id="main" ref={mainRef} tabIndex={-1} className="outline-none">
         <motion.section id="top" style={{ '--hero-progress': reduceMotion ? 0 : heroProgress } as MotionStyle} className="hero-section">
-          <div className="hero-layout relative mx-auto grid max-w-7xl items-center gap-10 px-6 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-14">
+          <motion.div className="hero-layout relative mx-auto grid max-w-7xl items-center gap-10 px-6 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-14"
+            initial={false}
+            animate={{ opacity: websiteRevealing ? 1 : 0, transform: websiteRevealing || reduceMotion ? 'translate3d(0, 0, 0)' : 'translate3d(0, 32px, 0)' }}
+            transition={{ delay: reduceMotion ? 0 : invitationTiming.revealDelay, duration: reduceMotion ? 0.2 : invitationTiming.revealDuration, ease: [0.22, 1, 0.36, 1] }}>
           <Reveal className="hero-copy relative z-10 max-w-2xl">
             <p className="hero-invitation body-copy">You are invited to</p>
             <h1 className="wedding-title font-title font-medium">Our <span className="block font-bold">Wedding</span></h1>
             <p className="hero-names card-title mt-8">{wedding.shortNames}</p>
             <div className="hero-photo mx-auto mt-6 w-full md:hidden">
-              <img src="/images/couple-hero.jpg" alt="Newton and Annie in their wedding outfits, holding a bouquet together" width="4672" height="7008" fetchPriority="high" className="block h-full w-full object-cover object-center" />
+              <img src="/images/couple-hero-1200.webp" srcSet="/images/couple-hero-720.webp 720w, /images/couple-hero-1200.webp 1200w" sizes="(min-width: 768px) 440px, 85vw" alt="Newton and Annie in their wedding outfits, holding a bouquet together" width="1200" height="1800" decoding="async" fetchPriority="high" className="block h-full w-full object-cover object-center" />
             </div>
             <ul className="hero-details body-copy mt-7 flex flex-col gap-3 text-ink">
               <li className="flex items-center gap-3">
@@ -188,9 +189,9 @@ export default function App() {
             </div>
           </Reveal>
           <div className="hero-photo mx-auto hidden w-full md:block lg:ml-auto">
-            <img src="/images/couple-hero.jpg" alt="Newton and Annie in their wedding outfits, holding a bouquet together" width="4672" height="7008" fetchPriority="high" className="block h-full w-full object-cover object-center" />
+            <img src="/images/couple-hero-1200.webp" srcSet="/images/couple-hero-720.webp 720w, /images/couple-hero-1200.webp 1200w" sizes="(min-width: 768px) 440px, 85vw" alt="Newton and Annie in their wedding outfits, holding a bouquet together" width="1200" height="1800" decoding="async" fetchPriority="high" className="block h-full w-full object-cover object-center" />
           </div>
-          </div>
+          </motion.div>
         </motion.section>
 
         <Countdown />
@@ -313,7 +314,7 @@ export default function App() {
           </footer>
         </Rsvp>
       </main>
-    </motion.div>}
+    </div>
     </>
   )
 }
